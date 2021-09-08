@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>Хочу это, быстро б.....!:</h1>
+
+    {% if is_owner_list %}
+        <input type="text">
+    {% endif %}
+
+    {% for product in wishlist.products.all %}
+        <a href="{{ product }}">{{ product }}</a><br>
+    {% endfor %}
+
+{% endblock %}
