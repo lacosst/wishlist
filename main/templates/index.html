@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}
+    Главная страница | WishList
+{% endblock %}
+
+{% block content %}
+    <h1>Список желаний</h1>
+    {% for i in data %}
+        <div class="row mb-3">
+            <div class="col-1 fs-1" style="color:#535353;">{{ i.id }}</div>
+            <div class="col">
+                <div class="row fs-3 mb-2">{{ i.title }}</div>
+                <div class="row border-bottom">
+                    <p><a target="_blank" href="{{ i.link }}">{{ i.link }}</a></p>
+                    <p>{{ i.price|intcomma }} руб.</p>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+{% endblock %}
