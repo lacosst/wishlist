@@ -1,12 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import *
+from .forms import *
 
 
 def index(request):
-    data = Product.objects.all()
+    wishlist = WishList.objects.all()
     context = {
-        'data': data,
+        'wishlist': wishlist,
         'title': 'Главная страница | WishList'
     }
     return render(request, 'index.html', context)
@@ -21,10 +22,18 @@ def about(request):
 
 def list_page(request, pk):
     wishlist = get_object_or_404(WishList, pk=pk)
-    print('wishlist: ', wishlist)
+    form = ProductForm
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            wishlist.products.add(Product.objects.last())
+            return redirect('wish_list_page', wishlist.pk)
 
     context = {
         'wishlist': wishlist,
-        'is_owner_list': wishlist.owner == request.user
+        'is_owner_list': wishlist.owner == request.user,
+        'form': form
     }
     return render(request, 'wish_list.html', context)

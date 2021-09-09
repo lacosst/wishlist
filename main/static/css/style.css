@@ -9,3 +9,7 @@ h1 {
 .brb {
     border-radius: 0 0 10px 10px;
 }
+
+.input-group-text {
+    width: 100px;
+}
